@@ -9,14 +9,14 @@ use NotificationChannels\Telegram\TelegramUpdates;
 
 class TelegramController extends Controller
 {
-    public function send(Request $request)
+    public function send()
     {
-        $message = json_encode($request->query('message')) ?? 'Test from my bot';
+        $message = 'Test from my bot';
 
         try {
             $chatId = $this->getChatId();
 
-            Notification::send($chatId, new TelegramNotification(json_decode($message)));
+            Notification::send($chatId, new TelegramNotification($message));
         } catch (\Throwable $th) {
             throw $th;
             return response()->json([
